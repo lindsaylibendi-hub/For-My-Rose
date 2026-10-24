@@ -30,15 +30,14 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            z-index: 10;
         }
         .active {
             display: flex;
         }
         h1 {
-            font-size: 2rem;
-            margin-bottom: 25px;
-            text-shadow: 0 0 8px #FF69B4;
+            font-size: 2.2rem;
+            margin-bottom: 35px;
+            text-shadow: 0 0 10px #FF69B4;
         }
         h2 {
             font-size: 1.5rem;
@@ -66,14 +65,13 @@
             background-color: #FF69B4;
             color: #000;
             border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
+            padding: 16px 40px;
+            font-size: 1.2rem;
             font-weight: bold;
-            border-radius: 25px;
+            border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 0 10px #FF69B4;
-            position: relative;
-            z-index: 20; /* Forces button to stay in front of everything else */
+            box-shadow: 0 0 15px #FF69B4;
+            width: 85%;
         }
         .countdown-text {
             font-size: 4rem;
@@ -102,14 +100,11 @@
         .merged-candle { width: 25px !important; height: 90px !important; }
         .merged-flame { width: 16px !important; height: 30px !important; top: -28px !important; left: 4px !important; }
         
-        /* Fixed Animated Emoji Assets */
         .emoji-avatar {
             font-size: 4rem;
             margin-bottom: 15px;
             display: inline-block;
             animation: float 2s infinite ease-in-out;
-            user-select: none;
-            pointer-events: none; /* Prevents element from blocking click events */
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
@@ -131,7 +126,6 @@
             box-shadow: 0 0 8px rgba(255,105,180,0.5);
         }
 
-        /* VINTAGE ENVELOPE INTERACTIVE DESIGN */
         .envelope-wrapper {
             position: relative;
             width: 320px;
@@ -187,7 +181,6 @@
             opacity: 0;
         }
 
-        /* VINTAGE SCROLLING LETTER BOX */
         .letter-container {
             background-color: #f7e1e5; 
             background-image: radial-gradient(circle, transparent 40%, rgba(201, 130, 147, 0.1) 100%);
@@ -227,7 +220,6 @@
 
     <!-- SCREEN 1: Welcome Screen -->
     <div id="screen1" class="screen active">
-        <div class="emoji-avatar">🎂</div>
         <h1>A Special Gift For You</h1>
         <button onclick="startCountdown()">Click to Start</button>
     </div>
@@ -283,100 +275,3 @@
         <!-- Hidden Elegant Letter Box -->
         <div class="letter-container" id="scrollBox">
             <div class="scrolling-content" id="letterText">
-                <p style="color: #b56b7c; font-weight: bold; font-size: 1.2rem;">My beautiful rose,</p>
-                              <p>As you step into this beautiful new chapter of your life, my deepest, most heartfelt prayer is for your health, safety, and unending happiness. Material wealth, silver, and gold I have none to give you today, but what I do possess is a girl's heart that will always love you truly, deeply, and completely. I am so incredibly grateful to God for your beautiful presence in my life; you are my peace and my greatest blessing.</p>
-                
-                <p>We have shared so many unforgettable moments together, from the quietest moments to those endless, late-night hours talking about everything and nothing at all. Every laugh we share binds me closer to you. Even though distance keeps you far away in Tharaka right now, never doubt that you are always right here, safely wrapped close to my heart. Distance only proves how strong what we have truly is.</p>
-                
-                <p>You deserve the world, my love. I promise to stand by you, to protect you in every way I can, and to be the partner you can always rely on. As we celebrate the amazing woman you are today, I wish you nothing but the absolute best that life has to offer. Stay safe, keep shining your beautiful light, and always remember how deeply I love and cherish you.</p>
-                
-                <p style="color: #b56b7c; font-weight: bold; text-align: right; margin-top: 30px;">Happy Birthday, my beautiful girl!<br>With all my love, always.</p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const spanishNumbers = ["", "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve", "Diez"];
-        let candleState = 0;
-
-        function navigate(fromId, toId) {
-            document.getElementById(fromId).classList.remove('active');
-            document.getElementById(toId).classList.add('active');
-        }
-
-        function startCountdown() {
-            navigate('screen1', 'screen2');
-            let count = 10;
-            const display = document.getElementById('countdownDisplay');
-            const timer = setInterval(() => {
-                count--;
-                if (count >= 1) {
-                    display.innerText = spanishNumbers[count];
-                } else {
-                    clearInterval(timer);
-                    navigate('screen2', 'screen3');
-                }
-            }, 1000);
-        }
-
-        function submitName() {
-            const name = document.getElementById('nameInput').value.trim();
-            if(!name) return alert("Please enter your name!");
-            navigate('screen3', 'screen4');
-        }
-
-        function generateCandles() {
-            const age = parseInt(document.getElementById('ageInput').value);
-            if(isNaN(age) || age <= 0) return alert("Please enter your age!");
-            const container = document.getElementById('candleContainer');
-            container.innerHTML = '';
-            for(let i = 0; i < age; i++) {
-                const candle = document.createElement('div');
-                candle.className = 'candle';
-                const flame = document.createElement('div');
-                flame.className = 'flame';
-                candle.appendChild(flame);
-                container.appendChild(candle);
-            }
-            navigate('screen4', 'screen5');
-        }
-
-        function handleCandleAction() {
-            const btn = document.getElementById('candleBtn');
-            if (candleState === 0) {
-                const container = document.getElementById('candleContainer');
-                container.innerHTML = '<div class="candle merged-candle"><div class="flame merged-flame" id="mainFlame"></div></div>';
-                document.getElementById('wishText').style.display = 'block';
-                btn.innerText = 'Blow out candle';
-                candleState = 1;
-            } else if (candleState === 1) {
-                const flame = document.getElementById('mainFlame');
-                if (flame) flame.style.display = 'none';
-                btn.innerText = 'Next';
-                candleState = 2;
-            } else {
-                navigate('screen5', 'screen6');
-            }
-        }
-
-        function showLetterScreen() {
-            navigate('screen6', 'screen7');
-        }
-
-        function openEnvelope() {
-            const envelope = document.getElementById('envelope');
-            envelope.classList.add('open');
-            
-            setTimeout(() => {
-                envelope.style.display = 'none';
-                const scrollBox = document.getElementById('scrollBox');
-                scrollBox.style.display = 'block';
-                
-                setTimeout(() => {
-                    scrollBox.classList.add('active-scroll');
-                }, 50);
-            }, 700);
-        }
-    </script>
-</body>
-</html>
