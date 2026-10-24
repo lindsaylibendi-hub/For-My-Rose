@@ -82,31 +82,44 @@
             margin-bottom: 20px;
         }
         .candle {
-            width: 8px;
-            height: 40px;
+            width: 8px; height: 40px;
             background: #FF69B4;
             border-radius: 2px;
             position: relative;
         }
         .flame {
-            width: 6px;
-            height: 12px;
+            width: 6px; height: 12px;
             background: #FF8C00;
             border-radius: 50% 50% 20% 20%;
-            position: absolute;
-            top: -12px;
-            left: 1px;
+            position: absolute; top: -12px; left: 1px;
             box-shadow: 0 0 8px #FFA500;
         }
-        .merged-candle {
-            width: 25px !important;
-            height: 90px !important;
+        .merged-candle { width: 25px !important; height: 90px !important; }
+        .merged-flame { width: 16px !important; height: 30px !important; top: -28px !important; left: 4px !important; }
+        
+        /* New Styling Elements */
+        .cartoon-img {
+            width: 140px;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite ease-in-out;
         }
-        .merged-flame {
-            width: 16px !important;
-            height: 30px !important;
-            top: -28px !important;
-            left: 4px !important;
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .photo-gallery {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+        .user-photo {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border: 2px solid #FF69B4;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255,105,180,0.5);
         }
         .letter-box {
             background: rgba(255, 105, 180, 0.1);
@@ -114,8 +127,14 @@
             padding: 20px;
             border-radius: 10px;
             text-align: left;
-            max-height: 60vh;
+            max-height: 50vh;
             overflow-y: auto;
+            position: relative;
+        }
+        /* Autoscroll styling simulation */
+        .scrolling-content {
+            position: relative;
+            transition: transform 0.3s ease-out;
         }
     </style>
 </head>
@@ -123,6 +142,8 @@
 
     <!-- SCREEN 1: Welcome Screen -->
     <div id="screen1" class="screen active">
+        <!-- Cute Cake Cartoon Asset -->
+        <img src="https://postimg.co" class="cartoon-img" alt="Cake Asset">
         <h1>A Special Gift For You</h1>
         <button onclick="startCountdown()">Click to Start</button>
     </div>
@@ -155,22 +176,34 @@
 
     <!-- SCREEN 6: Cake Milestone -->
     <div id="screen6" class="screen">
+        <!-- Sweet Couple Cartoon Asset -->
+        <img src="https://postimg.co" class="cartoon-img" alt="Couple Asset">
         <h1>🎂 Happy Birthday Gakure!</h1>
         <button onclick="showLetter()">Open Letter</button>
     </div>
 
-    <!-- SCREEN 7: Final Letter -->
+    <!-- SCREEN 7: Final Letter (With Auto-Scrolling & Photo Spots) -->
     <div id="screen7" class="screen">
-        <div class="letter-box">
-            <p style="color: #FF69B4; font-weight: bold;">My beautiful rose,</p>
-            
-            <p>As you step into this beautiful new chapter of your life, my deepest, most heartfelt prayer is for your health, safety, and unending happiness. Material wealth, silver, and gold I have none to give you today, but what I do possess is a man's heart that will always love you truly, deeply, and completely. I am so incredibly grateful to God for your beautiful presence in my life; you are my peace and my greatest blessing.</p>
-            
-            <p>We have shared so many unforgettable moments together, from the quietest moments to those endless, late-night hours talking about everything and nothing at all. Every laugh we share binds me closer to you. Even though distance keeps you far away in Tharaka right now, never doubt that you are always right here, safely wrapped close to my heart. Distance only proves how strong what we have truly is.</p>
-            
-            <p>You deserve the world, my love. I promise to stand by you, to protect you in every way I can, and to be the partner you can always rely on. As we celebrate the amazing woman you are today, I wish you nothing but the absolute best that life has to offer. Stay safe, keep shining your beautiful light, and always remember how deeply I love and cherish you.</p>
-            
-            <p style="color: #FF69B4; font-weight: bold; text-align: right;">Happy Birthday, my beautiful girl!<br>With all my love, always.</p>
+        
+        <!-- PHOTO SPOTS: Replace the source URLs inside quotes with your actual photo URLs! -->
+        <div class="photo-gallery">
+            <img src="https://placeholder.com" class="user-photo" alt="Our Memory 1">
+            <img src="https://placeholder.com" class="user-photo" alt="Our Memory 2">
+            <img src="https://placeholder.com" class="user-photo" alt="Our Memory 3">
+        </div>
+
+        <div class="letter-box" id="scrollBox">
+            <div class="scrolling-content">
+                <p style="color: #FF69B4; font-weight: bold;">My beautiful rose,</p>
+                
+                <p>As you step into this beautiful new chapter of your life, my deepest, most heartfelt prayer is for your health, safety, and unending happiness. Material wealth, silver, and gold I have none to give you today, but what I do possess is a girl's heart that will always love you truly, deeply, and completely. I am so incredibly grateful to God for your beautiful presence in my life; you are my peace and my greatest blessing.</p>
+                
+                <p>We have shared so many unforgettable moments together, from the quietest moments to those endless, late-night hours talking about everything and nothing at all. Every laugh we share binds me closer to you. Even though distance keeps you far away in Tharaka right now, never doubt that you are always right here, safely wrapped close to my heart. Distance only proves how strong what we have truly is.</p>
+                
+                <p>You deserve the world, my love. I promise to stand by you, to protect you in every way I can, and to be the partner you can always rely on. As we celebrate the amazing woman you are today, I wish you nothing but the absolute best that life has to offer. Stay safe, keep shining your beautiful light, and always remember how deeply I love and cherish you.</p>
+                
+                <p style="color: #FF69B4; font-weight: bold; text-align: right;">Happy Birthday, my beautiful girl!<br>With all my love, always.</p>
+            </div>
         </div>
     </div>
 
@@ -223,28 +256,33 @@
         function handleCandleAction() {
             const btn = document.getElementById('candleBtn');
             if (candleState === 0) {
-                const container = document.getElementById('candleContainer');
-                container.innerHTML = `
-                    <div class="candle merged-candle">
-                        <div class="flame merged-flame" id="mainFlame"></div>
-                    </div>
-                `;
-                document.getElementById('wishText').style.display = 'block';
-                btn.innerText = 'Blow out candle';
-                candleState = 1;
-            } else if (candleState === 1) {
-                const flame = document.getElementById('mainFlame');
-                if (flame) flame.style.display = 'none';
-                btn.innerText = 'Next';
-                candleState = 2;
-            } else {
-                navigate('screen5', 'screen6');
-            }
-        }
-
-        function showLetter() {
-            navigate('screen6', 'screen7');
-        }
-    </script>
-</body>
-</html>
+const container = document.getElementById('candleContainer');
+container.innerHTML = <div class="candle merged-candle"> <div class="flame merged-flame" id="mainFlame"></div> </div>;
+document.getElementById('wishText').style.display = 'block';
+btn.innerText = 'Blow out candle';
+candleState = 1;
+} else if (candleState === 1) {
+const flame = document.getElementById('mainFlame');
+if (flame) flame.style.display = 'none';
+btn.innerText = 'Next';
+candleState = 2;
+} else {
+navigate('screen5', 'screen6');
+}
+}
+function showLetter() {
+navigate('screen6', 'screen7');
+startAutoScroll();
+}
+// Automatic Smooth Letter Scroller
+function startAutoScroll() {
+const box = document.getElementById('scrollBox');
+let scrollSpeed = 1;
+const scrollInterval = setInterval(() => {
+box.scrollTop += scrollSpeed;
+// Stops scrolling when reaching the bottom of the container
+if (box.scrollTop + box.clientHeight >= box.scrollHeight) {
+clearInterval(scrollInterval);
+}
+}, 40); // Controls smoothly ticking downwards
+}
