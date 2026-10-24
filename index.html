@@ -29,6 +29,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
+            z-index: 10;
         }
         .active {
             display: flex;
@@ -70,6 +72,8 @@
             border-radius: 25px;
             cursor: pointer;
             box-shadow: 0 0 10px #FF69B4;
+            position: relative;
+            z-index: 20; /* Forces button to stay in front of everything else */
         }
         .countdown-text {
             font-size: 4rem;
@@ -98,15 +102,20 @@
         .merged-candle { width: 25px !important; height: 90px !important; }
         .merged-flame { width: 16px !important; height: 30px !important; top: -28px !important; left: 4px !important; }
         
-        .cartoon-img {
-            width: 140px;
+        /* Fixed Animated Emoji Assets */
+        .emoji-avatar {
+            font-size: 4rem;
             margin-bottom: 15px;
-            animation: bounce 2s infinite ease-in-out;
+            display: inline-block;
+            animation: float 2s infinite ease-in-out;
+            user-select: none;
+            pointer-events: none; /* Prevents element from blocking click events */
         }
-        @keyframes bounce {
+        @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-10px); }
         }
+        
         .photo-gallery {
             display: flex;
             gap: 10px;
@@ -127,7 +136,7 @@
             position: relative;
             width: 320px;
             height: 220px;
-            background-color: #c98293; /* Vintage Pink */
+            background-color: #c98293; 
             border-radius: 4px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             cursor: pointer;
@@ -141,14 +150,13 @@
         .envelope-wrapper:hover {
             transform: scale(1.02);
         }
-        /* Top flap of envelope */
         .envelope-flap {
             position: absolute;
             top: 0; left: 0;
             width: 0; height: 0;
             border-left: 160px solid transparent;
             border-right: 160px solid transparent;
-            border-top: 120px solid #b56b7c; /* Darker vintage flap */
+            border-top: 120px solid #b56b7c; 
             transform-origin: top;
             transition: transform 0.6s ease-in-out;
             z-index: 3;
@@ -157,7 +165,6 @@
             transform: rotateX(180deg);
             z-index: 1;
         }
-        /* Inside pocket sides */
         .envelope-pockets {
             position: absolute;
             bottom: 0; left: 0;
@@ -182,7 +189,7 @@
 
         /* VINTAGE SCROLLING LETTER BOX */
         .letter-container {
-            background-color: #f7e1e5; /* Soft Vintage Parchment Pink */
+            background-color: #f7e1e5; 
             background-image: radial-gradient(circle, transparent 40%, rgba(201, 130, 147, 0.1) 100%);
             border: 2px solid #b56b7c;
             padding: 25px 20px;
@@ -192,7 +199,7 @@
             overflow: hidden;
             position: relative;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.08), 0 4px 15px rgba(0,0,0,0.4);
-            display: none; /* Triggers active upon envelope open */
+            display: none; 
         }
         .scrolling-content {
             position: absolute;
@@ -201,10 +208,14 @@
             transform: translateY(320px);
         }
         .letter-container.active-scroll .scrolling-content {
-            animation: cinematicVerySlowScroll 60s linear forwards; /* VERY SLOW 60 SECONDS SCROLL */
+            animation: cinematicVerySlowScroll 60s linear forwards; 
+        }
+        @keyframes cinematicVerySlowScroll {
+            0% { transform: translateY(320px); }
+            100% { transform: translateY(-100%); }
         }
         .scrolling-content p {
-            color: #4a2831; /* Deep vintage elegant dark burgundy text */
+            color: #4a2831; 
             font-family: 'Georgia', serif;
             font-size: 1.05rem;
             line-height: 1.7;
@@ -216,7 +227,7 @@
 
     <!-- SCREEN 1: Welcome Screen -->
     <div id="screen1" class="screen active">
-        <img src="https://postimg.co" class="cartoon-img" alt="Cake">
+        <div class="emoji-avatar">🎂</div>
         <h1>A Special Gift For You</h1>
         <button onclick="startCountdown()">Click to Start</button>
     </div>
@@ -249,7 +260,7 @@
 
     <!-- SCREEN 6: Cake Milestone -->
     <div id="screen6" class="screen">
-        <img src="https://postimg.co" class="cartoon-img" alt="Couple">
+        <div class="emoji-avatar">💑</div>
         <h1>🎂 Happy Birthday Gakure!</h1>
         <button onclick="showLetterScreen()">Open Letter</button>
     </div>
@@ -273,10 +284,7 @@
         <div class="letter-container" id="scrollBox">
             <div class="scrolling-content" id="letterText">
                 <p style="color: #b56b7c; font-weight: bold; font-size: 1.2rem;">My beautiful rose,</p>
-                          <div class="scrolling-content" id="letterText">
-                <p style="color: #b56b7c; font-weight: bold; font-size: 1.2rem;">My beautiful rose,</p>
-                
-                <p>As you step into this beautiful new chapter of your life, my deepest, most heartfelt prayer is for your health, safety, and unending happiness. Material wealth, silver, and gold I have none to give you today, but what I do possess is a girl's heart that will always love you truly, deeply, and completely. I am so incredibly grateful to God for your beautiful presence in my life; you are my peace and my greatest blessing.</p>
+                              <p>As you step into this beautiful new chapter of your life, my deepest, most heartfelt prayer is for your health, safety, and unending happiness. Material wealth, silver, and gold I have none to give you today, but what I do possess is a girl's heart that will always love you truly, deeply, and completely. I am so incredibly grateful to God for your beautiful presence in my life; you are my peace and my greatest blessing.</p>
                 
                 <p>We have shared so many unforgettable moments together, from the quietest moments to those endless, late-night hours talking about everything and nothing at all. Every laugh we share binds me closer to you. Even though distance keeps you far away in Tharaka right now, never doubt that you are always right here, safely wrapped close to my heart. Distance only proves how strong what we have truly is.</p>
                 
@@ -284,78 +292,91 @@
                 
                 <p style="color: #b56b7c; font-weight: bold; text-align: right; margin-top: 30px;">Happy Birthday, my beautiful girl!<br>With all my love, always.</p>
             </div>
-const spanishNumbers = ["", "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve", "Diez"];
-let candleState = 0;
-function navigate(fromId, toId) {
-document.getElementById(fromId).classList.remove('active');
-document.getElementById(toId).classList.add('active');
-}
-function startCountdown() {
-navigate('screen1', 'screen2');
-let count = 10;
-const display = document.getElementById('countdownDisplay');
-const timer = setInterval(() => {
-count--;
-if (count >= 1) {
-display.innerText = spanishNumbers[count];
-} else {
-clearInterval(timer);
-navigate('screen2', 'screen3');
-}
-}, 1000);
-}
-function submitName() {
-const name = document.getElementById('nameInput').value.trim();
-if(!name) return alert("Please enter your name!");
-navigate('screen3', 'screen4');
-}
-function generateCandles() {
-const age = parseInt(document.getElementById('ageInput').value);
-if(isNaN(age) || age <= 0) return alert("Please enter your age!");
-const container = document.getElementById('candleContainer');
-container.innerHTML = '';
-for(let i = 0; i < age; i++) {
-const candle = document.createElement('div');
-candle.className = 'candle';
-const flame = document.createElement('div');
-flame.className = 'flame';
-candle.appendChild(flame);
-container.appendChild(candle);
-}
-navigate('screen4', 'screen5');
-}
-function handleCandleAction() {
-const btn = document.getElementById('candleBtn');
-if (candleState === 0) {
-const container = document.getElementById('candleContainer');
-container.innerHTML = <div class="candle merged-candle"> <div class="flame merged-flame" id="mainFlame"></div> </div>;
-document.getElementById('wishText').style.display = 'block';
-btn.innerText = 'Blow out candle';
-candleState = 1;
-} else if (candleState === 1) {
-const flame = document.getElementById('mainFlame');
-if (flame) flame.style.display = 'none';
-btn.innerText = 'Next';
-candleState = 2;
-} else {
-navigate('screen5', 'screen6');
-}
-}
-function showLetterScreen() {
-navigate('screen6', 'screen7');
-}
-// Envelope interaction triggers the parchment paper appearance and slow scroll
-function openEnvelope() {
-const envelope = document.getElementById('envelope');
-envelope.classList.add('open');
-// Wait for flap flip animation to conclude, then fade envelope out and slide letter up
-setTimeout(() => {
-envelope.style.display = 'none';
-const scrollBox = document.getElementById('scrollBox');
-scrollBox.style.display = 'block';
-// Triggers hardware accelerated very slow scroll
-setTimeout(() => {
-scrollBox.classList.add('active-scroll');
-}, 50);
-}, 700);
-}
+        </div>
+    </div>
+
+    <script>
+        const spanishNumbers = ["", "Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete", "Ocho", "Nueve", "Diez"];
+        let candleState = 0;
+
+        function navigate(fromId, toId) {
+            document.getElementById(fromId).classList.remove('active');
+            document.getElementById(toId).classList.add('active');
+        }
+
+        function startCountdown() {
+            navigate('screen1', 'screen2');
+            let count = 10;
+            const display = document.getElementById('countdownDisplay');
+            const timer = setInterval(() => {
+                count--;
+                if (count >= 1) {
+                    display.innerText = spanishNumbers[count];
+                } else {
+                    clearInterval(timer);
+                    navigate('screen2', 'screen3');
+                }
+            }, 1000);
+        }
+
+        function submitName() {
+            const name = document.getElementById('nameInput').value.trim();
+            if(!name) return alert("Please enter your name!");
+            navigate('screen3', 'screen4');
+        }
+
+        function generateCandles() {
+            const age = parseInt(document.getElementById('ageInput').value);
+            if(isNaN(age) || age <= 0) return alert("Please enter your age!");
+            const container = document.getElementById('candleContainer');
+            container.innerHTML = '';
+            for(let i = 0; i < age; i++) {
+                const candle = document.createElement('div');
+                candle.className = 'candle';
+                const flame = document.createElement('div');
+                flame.className = 'flame';
+                candle.appendChild(flame);
+                container.appendChild(candle);
+            }
+            navigate('screen4', 'screen5');
+        }
+
+        function handleCandleAction() {
+            const btn = document.getElementById('candleBtn');
+            if (candleState === 0) {
+                const container = document.getElementById('candleContainer');
+                container.innerHTML = '<div class="candle merged-candle"><div class="flame merged-flame" id="mainFlame"></div></div>';
+                document.getElementById('wishText').style.display = 'block';
+                btn.innerText = 'Blow out candle';
+                candleState = 1;
+            } else if (candleState === 1) {
+                const flame = document.getElementById('mainFlame');
+                if (flame) flame.style.display = 'none';
+                btn.innerText = 'Next';
+                candleState = 2;
+            } else {
+                navigate('screen5', 'screen6');
+            }
+        }
+
+        function showLetterScreen() {
+            navigate('screen6', 'screen7');
+        }
+
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.add('open');
+            
+            setTimeout(() => {
+                envelope.style.display = 'none';
+                const scrollBox = document.getElementById('scrollBox');
+                scrollBox.style.display = 'block';
+                
+                setTimeout(() => {
+                    scrollBox.classList.add('active-scroll');
+                }, 50);
+            }, 700);
+        }
+    </script>
+</body>
+</html>
